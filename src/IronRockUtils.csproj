@@ -1,0 +1,88 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{BB4D516B-35E8-447B-9612-CBB485F1C44E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>IronRockUtils</RootNamespace>
+    <AssemblyName>IronRockUtils</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Master\Datos de programa\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonApplicationData.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="ConsoleLog.cs" />
+    <Compile Include="Data\SqlConnector.cs" />
+    <Compile Include="Data\SqlResult.cs" />
+    <Compile Include="Data\SqlRow.cs" />
+    <Compile Include="IFilter.cs" />
+    <Compile Include="Ipc\APipeConnection.cs" />
+    <Compile Include="Ipc\ClientPipeConnection.cs" />
+    <Compile Include="Ipc\IChannelManager.cs" />
+    <Compile Include="Ipc\IClientChannel.cs" />
+    <Compile Include="Ipc\IInterProcessConnection.cs" />
+    <Compile Include="Ipc\InterProcessConnectionState.cs" />
+    <Compile Include="Ipc\InterProcessIOException.cs" />
+    <Compile Include="Ipc\NamedPipeIOException.cs" />
+    <Compile Include="Ipc\NamedPipeNative.cs" />
+    <Compile Include="Ipc\NamedPipeWrapper.cs" />
+    <Compile Include="Ipc\PipeHandle.cs" />
+    <Compile Include="Ipc\PipeManager.cs" />
+    <Compile Include="Ipc\ServerNamedPipe.cs" />
+    <Compile Include="Ipc\ServerPipeConnection.cs" />
+    <Compile Include="Json\SerializationUtils.cs" />
+    <Compile Include="Json\JsonElement.cs" />
+    <Compile Include="Json\JsonElementType.cs" />
+    <Compile Include="Licensing\DesigntimeLicense.cs" />
+    <Compile Include="Licensing\LicenseProvider.cs" />
+    <Compile Include="Licensing\RuntimeLicense.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="MailUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security.cs" />
+    <Compile Include="SQLWrapper.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data" />
+    <Folder Include="Licensing" />
+    <Folder Include="Ipc" />
+    <Folder Include="Json" />
+  </ItemGroup>
+</Project>
