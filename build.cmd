@@ -1,6 +1,6 @@
 @echo off
 
-SET msbuild=C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe
+set msbuild=C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe
 
 if exist src\bin\Release (rmdir /s /q src\bin\Release)
 %msbuild% -m -t:Build -property:Configuration=Release src\IronRockUtils.sln

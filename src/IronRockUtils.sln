@@ -4,8 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # SharpDevelop 4.4
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronRockUtils", "IronRockUtils.csproj", "{BB4D516B-35E8-447B-9612-CBB485F1C44E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test.csproj", "{5052A617-15AB-46EA-A695-6C769FFB757B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -18,9 +16,5 @@ Global
 		{BB4D516B-35E8-447B-9612-CBB485F1C44E}.Debug|x86.ActiveCfg = Debug|x86
 		{BB4D516B-35E8-447B-9612-CBB485F1C44E}.Release|x86.Build.0 = Release|x86
 		{BB4D516B-35E8-447B-9612-CBB485F1C44E}.Release|x86.ActiveCfg = Release|x86
-		{5052A617-15AB-46EA-A695-6C769FFB757B}.Debug|x86.Build.0 = Debug|Any CPU
-		{5052A617-15AB-46EA-A695-6C769FFB757B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5052A617-15AB-46EA-A695-6C769FFB757B}.Release|x86.Build.0 = Release|Any CPU
-		{5052A617-15AB-46EA-A695-6C769FFB757B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

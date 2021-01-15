@@ -15,16 +15,19 @@ namespace IronRockUtils
 		private DbConnection conn;
 		private DbCommand cmd;
 		private int timeout;
+		private int dataTimeout;
 
 		//private string connectionStringFormat;
 
 		// Builds the wrapper using the specified config data object.
-		public SQLWrapper(Config config, int timeout)
+		public SQLWrapper(Config config, int timeout, int dataTimeout)
 		{
 			this.config = config;
 			this.conn = null;
+
 			this.timeout = timeout;
-			
+			this.dataTimeout = dataTimeout;
+
 			this.cmd = new SqlCommand ();
 
 			if (config.get("sqlType") == "PostgreSQL")
@@ -103,7 +106,7 @@ namespace IronRockUtils
 
 			cmd.Connection = this.conn;
 			cmd.CommandText = query;
-			cmd.CommandTimeout = 300;
+			cmd.CommandTimeout = this.dataTimeout;
 
 			DbDataReader reader = cmd.ExecuteReader();
 
@@ -131,7 +134,7 @@ namespace IronRockUtils
 
 			this.cmd.Connection = this.conn;
 			this.cmd.CommandText = query;
-			this.cmd.CommandTimeout = 300;
+			this.cmd.CommandTimeout = this.dataTimeout;
 
 			DbDataReader reader = cmd.ExecuteReader();
 
@@ -158,7 +161,7 @@ namespace IronRockUtils
 
 			cmd.Connection = this.conn;
 			cmd.CommandText = query;
-			cmd.CommandTimeout = 300;
+			cmd.CommandTimeout = this.dataTimeout;
 
 			return cmd.ExecuteNonQuery ();
 		}
@@ -170,7 +173,7 @@ namespace IronRockUtils
 
 			cmd.Connection = this.conn;
 			cmd.CommandText = query;
-			cmd.CommandTimeout = 300;
+			cmd.CommandTimeout = this.dataTimeout;
 
 			string result = Convert.ToString(cmd.ExecuteScalar());
 			return String.IsNullOrEmpty(result) ? "" : result;
