@@ -7,6 +7,7 @@ namespace IronRockUtils
 	public class Log
 	{
 		public static string logFolder = AppDomain.CurrentDomain.BaseDirectory;
+		public static bool stdout = false;
 
 		public static string TimeStamp()
 		{
@@ -16,6 +17,12 @@ namespace IronRockUtils
 
 		public static void write (string str)
 		{
+			if (stdout)
+			{
+				Console.WriteLine(str);
+				return;
+			}
+
 			try {
 				System.IO.File.AppendAllText(logFolder + "log.txt", TimeStamp() + ": " + str + "\r\n");
 			}

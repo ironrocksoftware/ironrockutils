@@ -1,34 +1,42 @@
 ﻿
 using System;
 using System.Data.SqlClient;
+using System.Data.Common;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Collections;
+using Npgsql;
 
 namespace IronRockUtils
 {
 	public class SQLWrapper
 	{
 		private Config config;
-		private SqlConnection conn;
-		private SqlCommand cmd;
+		private DbConnection conn;
+		private DbCommand cmd;
+		private int timeout;
 
-		private string connectionStringFormat;
+		//private string connectionStringFormat;
 
 		// Builds the wrapper using the specified config data object.
 		public SQLWrapper(Config config, int timeout)
 		{
 			this.config = config;
 			this.conn = null;
+			this.timeout = timeout;
+			
 			this.cmd = new SqlCommand ();
 
-			setConnectionStringFormat ("server={0}; user id={1}; password={2}; database={3}; Connection Timeout=" + (timeout > 0 ? timeout : 300));
+			if (config.get("sqlType") == "PostgreSQL")
+				this.cmd = new NpgsqlCommand ();
+
+			//setConnectionStringFormat ("server={0}; user id={1}; password={2}; database={3}; Connection Timeout=" + (timeout > 0 ? timeout : 300));
 		}
 
-		public void setConnectionStringFormat (string value)
+		/*public void setConnectionStringFormat (string value)
 		{
 			connectionStringFormat = value;
-		}
+		}*/
 
 		// Returns true/false if the connection is open or closed respectively.
 		public bool isOpen ()
@@ -39,13 +47,21 @@ namespace IronRockUtils
 		// Returns the connection string obtained from the configuration object.
 		public string connectionString ()
 		{
-			string cs = String.Format(this.connectionStringFormat, config.get("sqlServer"), config.get("sqlUsername"), config.get("sqlPassword"), config.get("sqlDatabase"));
+			string format = "server={0}; user id={1}; password={2}; database={3}; Connection Timeout=" + (timeout > 0 ? timeout : 300);
+
+			if (config.get("sqlType") == "PostgreSQL")
+				format = "Host={0};Username={1};Password={2};Database={3}";
+
+			string cs = String.Format(format, config.get("sqlServer"), config.get("sqlUsername"), config.get("sqlPassword"), config.get("sqlDatabase"));
 			return cs;
 		}
 
 		// Creates a new SqlConnection.
-		public SqlConnection createConnection()
+		public DbConnection createConnection()
 		{
+			if (config.get("sqlType") == "PostgreSQL")
+				return new NpgsqlConnection (connectionString());
+
 			return new SqlConnection (connectionString());
 		}
 
@@ -53,7 +69,7 @@ namespace IronRockUtils
 		public bool open ()
 		{
 			if (isOpen()) return true;
-			close ();
+			close();
 
 			conn = createConnection();
 
@@ -85,11 +101,11 @@ namespace IronRockUtils
 			ArrayList array = new ArrayList ();
 			if (!open()) return array;
 
-			this.cmd.Connection = this.conn;
-			this.cmd.CommandText = query;
-			this.cmd.CommandTimeout = 300;
+			cmd.Connection = this.conn;
+			cmd.CommandText = query;
+			cmd.CommandTimeout = 300;
 
-			SqlDataReader reader = this.cmd.ExecuteReader();
+			DbDataReader reader = cmd.ExecuteReader();
 
 			while (reader.Read())
 			{
@@ -117,7 +133,7 @@ namespace IronRockUtils
 			this.cmd.CommandText = query;
 			this.cmd.CommandTimeout = 300;
 
-			SqlDataReader reader = this.cmd.ExecuteReader();
+			DbDataReader reader = cmd.ExecuteReader();
 
 			while (reader.Read())
 			{
@@ -140,11 +156,11 @@ namespace IronRockUtils
 		{
 			if (!open()) return 0;
 
-			this.cmd.Connection = this.conn;
-			this.cmd.CommandText = query;
-			this.cmd.CommandTimeout = 300;
+			cmd.Connection = this.conn;
+			cmd.CommandText = query;
+			cmd.CommandTimeout = 300;
 
-			return this.cmd.ExecuteNonQuery ();
+			return cmd.ExecuteNonQuery ();
 		}
 
 		// Executes a SQL statement and returns scalar.
@@ -152,11 +168,11 @@ namespace IronRockUtils
 		{
 			if (!open()) return "";
 
-			this.cmd.Connection = this.conn;
-			this.cmd.CommandText = query;
-			this.cmd.CommandTimeout = 300;
+			cmd.Connection = this.conn;
+			cmd.CommandText = query;
+			cmd.CommandTimeout = 300;
 
-			string result = Convert.ToString(this.cmd.ExecuteScalar());
+			string result = Convert.ToString(cmd.ExecuteScalar());
 			return String.IsNullOrEmpty(result) ? "" : result;
 		}
 	}

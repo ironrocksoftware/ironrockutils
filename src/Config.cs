@@ -37,9 +37,20 @@ namespace IronRockUtils
 			this.load();
 		}
 
+		// Constructs an empty config object.
+		public Config ()
+		{
+			this.fields = new NameValueCollection ();
+			this.filepath = null;
+			this.password = null;
+		}
+
 		// Saves the contents of the configuration dataset to the output file.
 		public bool save ()
 		{
+			if (this.filepath == null)
+				return false;
+
 			string data = "";
 
 			for (int i = 0; i < this.fields.Count; i++)
