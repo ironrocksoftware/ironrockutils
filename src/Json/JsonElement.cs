@@ -606,11 +606,14 @@ namespace IronRockUtils.Json
 
 			int j1 = str.IndexOf(",", sindex);
 			int j2 = str.IndexOf("}", sindex);
-
+			int j3 = str.IndexOf("]", sindex);
 			int j = j1;
 
 			if (j == -1 || (j2 != -1 && j2 < j1))
 				j = j2;
+
+			if (j == -1 || (j3 != -1 && j3 < j))
+				j = j3;
 
 			if (j == -1)
 			{
@@ -628,7 +631,6 @@ namespace IronRockUtils.Json
 		public static JsonElement fromString (string str)
 		{
 			int temp;
-
 			return String.IsNullOrEmpty(str) ? new JsonElement(JsonElementType.OBJECT) : fromString(str, 0, str.Length-1, out temp, true);
 		}
 	}
